@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countable & Uncountable Nouns Quiz</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fredoka Font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Fredoka', sans-serif; /* Enhanced font */
+            /* Softer, more playful gradient */
+            background: linear-gradient(to right top, #FFD1DC, #B0E0E6, #C3F2C3); /* Pastel Pink, Light Blue, Light Green */
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; /* Allow content and footer to stack */
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .container {
+            max-width: 1024px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 2.5rem; /* Increased padding */
+            background-color: #ffffff;
+            border-radius: 25px; /* Even more rounded corners */
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25); /* Stronger, softer shadow */
+            position: relative;
+            overflow: hidden;
+            border: 5px solid #FFC0CB; /* Pink border */
+            flex-grow: 1; /* Allow container to grow and push footer down */
+        }
+        h1, h2, h3 {
+            color: #4B0082; /* Deep Purple for headings */
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1); /* More pronounced shadow */
+        }
+        .section-card {
+            background-color: #FFFACD; /* Light Yellow for sections */
+            border-radius: 18px; /* More rounded */
+            padding: 2rem; /* Increased padding */
+            margin-bottom: 2rem; /* Increased margin */
+            border: 3px solid #FFD700; /* Gold border */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+        }
+        .example-box {
+            background-color: #E0FFFF; /* Light Cyan for examples */
+            border-left: 8px solid #6A5ACD; /* Slate Blue border */
+            padding: 1.25rem; /* Increased padding */
+            margin-top: 1rem;
+            border-radius: 12px; /* More rounded */
+            font-style: italic;
+            color: #483D8B; /* Darker blue for text */
+        }
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2.5rem;
+            background-color: #ADD8E6; /* Light Blue */
+            border-radius: 15px;
+            padding: 0.75rem; /* Increased padding */
+            box-shadow: inset 0 3px 8px rgba(0,0,0,0.15);
+        }
+        .tab-button {
+            padding: 1rem 2rem; /* Larger buttons */
+            border-radius: 12px;
+            font-weight: 700;
+            color: #4682B4; /* Steel Blue */
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            flex-grow: 1;
+            text-align: center;
+            font-size: 1.1rem; /* Slightly larger text */
+        }
+        .tab-button.active {
+            background-color: #FF69B4; /* Hot Pink */
+            color: white;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+        }
+        .tab-button:hover:not(.active) {
+            background-color: #B0E0E6; /* Powder Blue */
+            color: #2F4F4F; /* Dark Slate Gray */
+        }
+
+        /* Quiz Specific Styles */
+        .quiz-option {
+            background-color: #FFE4E1; /* Misty Rose */
+            padding: 1rem 1.25rem; /* Larger options */
+            border-radius: 15px; /* More rounded */
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, border 0.2s ease;
+            border: 3px solid transparent; /* Default transparent border */
+            font-size: 1.1rem; /* Larger text */
+            font-weight: 600;
+            color: #8B0000; /* Dark Red */
+        }
+        .quiz-option:hover {
+            background-color: #FFC0CB; /* Pink */
+            transform: translateY(-3px);
+        }
+        .quiz-option.selected {
+            background-color: #98FB98; /* Pale Green when selected */
+            border: 3px solid #3CB371; /* Medium Sea Green border */
+        }
+        .quiz-option.correct {
+            background-color: #32CD32; /* Lime Green for correct */
+            border: 3px solid #228B22; /* Forest Green */
+            color: white; /* White text for contrast */
+        }
+        .quiz-option.incorrect {
+            background-color: #FF4500; /* Orange Red for incorrect */
+            border: 3px solid #B22222; /* Firebrick */
+            color: white; /* White text for contrast */
+        }
+        .button-primary {
+            background-color: #FF69B4; /* Hot Pink */
+            color: white;
+            padding: 1rem 2.5rem; /* Larger buttons */
+            border-radius: 15px;
+            font-weight: 700;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.2s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            font-size: 1.2rem; /* Larger text */
+        }
+        .button-primary:hover {
+            background-color: #FF1493; /* Deep Pink */
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .button-primary:disabled {
+            background-color: #D3D3D3; /* Light Gray */
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        .message-box {
+            background-color: #FFF8DC; /* Cornsilk for messages */
+            border: 2px solid #DAA520; /* Goldenrod border */
+            color: #8B4513; /* Saddle Brown */
+            padding: 1.25rem; /* Increased padding */
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            display: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .player-score {
+            font-size: 1.5rem; /* Larger score text */
+            font-weight: 800;
+            color: #4169E1; /* Royal Blue */
+        }
+        .player-area {
+            background-color: #F0F8FF; /* Alice Blue */
+            border-radius: 18px;
+            padding: 1.5rem; /* Increased padding */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            border: 3px solid #87CEEB; /* Sky Blue border */
+        }
+        .player-area h4 {
+            font-size: 1.8rem; /* Larger player name */
+            font-weight: 800;
+            color: #483D8B; /* Dark Slate Blue */
+            margin-bottom: 1.25rem;
+        }
+        .timer-bar-container {
+            width: 100%;
+            background-color: #ADD8E6; /* Light Blue */
+            border-radius: 8px;
+            height: 15px; /* Thicker bar */
+            margin-top: 1.5rem;
+            overflow: hidden;
+            border: 2px solid #87CEEB; /* Sky Blue border */
+        }
+        .timer-bar {
+            height: 100%;
+            width: 100%;
+            background-color: #FF69B4; /* Hot Pink */
+            border-radius: 8px;
+            transition: width linear;
+        }
+        #questionDisplay {
+            background-color: #E6E6FA; /* Lavender */
+            border: 3px solid #DDA0DD; /* Plum */
+            color: #4B0082; /* Deep Purple */
+            font-size: 1.8rem; /* Larger question text */
+            padding: 1.5rem;
+            border-radius: 18px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        #quizResults h3 {
+            color: #3CB371; /* Medium Sea Green */
+        }
+        #finalScores {
+            color: #4169E1; /* Royal Blue */
+            font-size: 2.2rem; /* Even larger final score */
+            font-weight: 800;
+        }
+        footer {
+            text-align: center;
+            margin-top: auto; /* Pushes footer to the bottom */
+            padding: 1.5rem; /* Increased padding */
+            border-top: 1px dashed #FFC0CB; /* Pink dashed line */
+            color: #6A5ACD; /* Slate Blue */
+            font-size: 0.9rem;
+            font-weight: 500;
+            width: 100%; /* Ensure footer spans full width */
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="container">
+        <h1 class="text-5xl text-center mb-8">Grammar Explorer & Quiz! ✨</h1>
+
+        <!-- Tab Buttons -->
+        <div id="tabButtons" class="tab-buttons">
+            <button class="tab-button active" data-tab="explanation">Grammar Notes 📝</button>
+            <button class="tab-button" data-tab="quiz">Fun Quiz! 🎮</button>
+        </div>
+
+        <!-- Tab Content: Explanation -->
+        <div id="explanationTab" class="tab-content active">
+            <div class="section-card">
+                <p class="mb-4 text-lg flex items-center">
+                    Nouns can be divided into two main groups: <strong>countable</strong> and <strong>uncountable</strong>. Knowing the difference helps us use words like 'some', 'any', 'much', 'many', and 'a lot of' correctly!
+                </p>
+            </div>
+
+            <!-- Countable Nouns Section -->
+            <div class="section-card">
+                <h2 class="text-3xl mb-3 flex items-center">
+                    Countable Nouns <span class="ml-3 text-3xl" role="img" aria-label="apple emoji">🍎</span>
+                </h2>
+                <p class="mb-2">Countable nouns are things we can count, one by one! They have a singular (one) and a plural (more than one) form.</p>
+                <div class="example-box">
+                    <p><strong>Examples:</strong></p>
+                    <ul class="list-disc list-inside">
+                        <li>One <em>apple</em>, two <em>apples</em></li>
+                        <li>A <em>book</em>, many <em>books</em></li>
+                        <li>Three <em>chairs</em>, several <em>chairs</em></li>
+                        <li>A <em>student</em>, some <em>students</em></li>
+                    </ul>
+                </div>
+                <p class="mt-4 text-lg flex items-center">
+                    We use <strong>'many'</strong> and <strong>'a lot of'</strong> with countable nouns.
+                </p>
+                <div class="example-box">
+                    <p><strong>Saying 'Yes' (Affirmative Sentences):</strong></p>
+                    <ul class="list-disc list-inside">
+                        <li>I have <strong>many</strong> friends.</li>
+                        <li>She bought <strong>a lot of</strong> books.</li>
+                        <li>There are <strong>some</strong> chairs in the room.</li>
+                    </ul>
+                    <p class="mt-2"><strong>Saying 'No' (Negative Sentences):</strong></p>
+                    <ul class="list-disc list-inside">
+                        <li>I don't have <strong>many</strong> apples.</li>
+                        <li>They didn't buy <strong>any</strong> tickets.</li>
+                        <li>There aren't <strong>any</strong> students in the class.</li>
+                    </ul>
+                    <p class="mt-2"><strong>Asking Questions:</strong></p>
+                    <ul class="list-disc list-inside">
+                        <li>Do you have <strong>many</strong> questions?</li>
+                        <li>Are there <strong>any</strong> pens on the desk?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Uncountable Nouns Section -->
+            <div class="section-card">
+                <h2 class="text-3xl mb-3 flex items-center">
+                    Uncountable Nouns <span class="ml-3 text-3xl" role="img" aria-label="water drop emoji">💧</span>
+                </h2>
+                <p class="mb-2">Uncountable nouns are things we can't count individually, like liquids or ideas. They usually don't have a plural form and are treated as singular (like 'one thing').</p>
+                <div class="example-box">
+                    <p><strong>Examples:</strong></p>
+                    <ul class="list-disc list-inside">
+                        <li><em>Water</em>, <em>milk</em>, <em>coffee</em> (liquids)</li>
+                        <li><em>Information</em>, <em>advice</em>, <em>news</em> (ideas)</li>
+                        <li><em>Sugar</em>, <em>salt</em>, <em>rice</em> (grains/powders)</li>
+                        <li><em>Furniture</em>, <em>luggage</em>, <em>equipment</em> (groups of things)</li>
+                        <li><em>Money</em>, <em>time</em>, <em>knowledge</em></li>
+                    </ul>
+                </div>
+                <p class="mt-4 text-lg flex items-center">
+                    We use <strong>'much'</strong> and <strong>'a lot of'</strong> with uncountable nouns.
+                </p>
+                <div class="example-box">
+                    <p><strong>Saying 'Yes' (Affirmative Sentences):</strong></p>
+                    <ul class="list-disc list-inside">
+                        <li>I have <strong>a lot of</strong> information.</li>
+                        <li>She needs <strong>some</strong> advice.</li>
+                        <li>There is <strong>some</strong> water in the bottle.</li>
+                    </ul>
+                    <p class="mt-2"><strong>Saying 'No' (Negative Sentences):</strong></p>
+                    <ul class="list-disc list-inside">
+                        <li>I don't have <strong>much</strong> money.</li>
+                        <li>They didn't give me <strong>any</strong> news.</li>
+                        <li>There isn't <strong>any</strong> sugar left.</li>
+                    </ul>
+                    <p class="mt-2"><strong>Asking Questions:</strong></p>
+                    <ul class="list-disc list-inside">
+                        <li>How <strong>much</strong> time do you have?</li>
+                        <li>Is there <strong>any</strong> milk in the fridge?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Summary of Quantifiers -->
+            <div class="section-card">
+                <h2 class="text-3xl mb-3 flex items-center">
+                    Summary of Quantifiers
+                </h2>
+                <ul class="list-disc list-inside space-y-2 text-lg">
+                    <li><strong class="text-blue-600">Some:</strong> Use in 'yes' sentences for both countable and uncountable nouns. (e.g., <em>some apples, some water</em>)</li>
+                    <li><strong class="text-blue-600">Any:</strong> Use in 'no' sentences and questions for both countable and uncountable nouns. (e.g., <em>any apples, any water</em>)</li>
+                    <li><strong class="text-blue-600">Many:</strong> Use with countable nouns, especially in 'no' sentences and questions. (e.g., <em>many books</em>)</li>
+                    <li><strong class="text-blue-600">Much:</strong> Use with uncountable nouns, especially in 'no' sentences and questions. (e.g., <em>much information</em>)</li>
+                    <li><strong class="text-blue-600">A lot of / Lots of:</strong> You can use this with both countable and uncountable nouns in 'yes', 'no', and questions! It's super friendly! (e.g., <em>a lot of friends, a lot of time</em>)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tab Content: Quiz -->
+        <div id="quizTab" class="tab-content hidden">
+            <div class="section-card">
+                <h2 class="text-4xl text-center mb-4">Quiz Time! 🧠</h2>
+                <p class="text-center mb-6 text-lg">Test your knowledge of countable and uncountable nouns and quantifiers. Compete with your friends!</p>
+
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6 mb-8">
+                    <div class="flex items-center space-x-2">
+                        <label for="numPlayers" class="font-semibold text-lg">How many players?</label>
+                        <select id="numPlayers" class="p-2 border border-gray-300 rounded-md shadow-sm text-lg">
+                            <option value="1">1 Player</option>
+                            <option value="2">2 Players</option>
+                            <option value="3">3 Players</option>
+                        </select>
+                    </div>
+                    <button id="startGameBtn" class="button-primary text-xl px-6 py-3">Start Quiz</button>
+                </div>
+
+                <div id="quizContainer" class="hidden">
+                    <div class="text-center mb-4">
+                        <div id="questionDisplay" class="text-2xl font-semibold mb-4 p-4 bg-blue-50 rounded-lg shadow-md">
+                            <!-- Question will be displayed here -->
+                        </div>
+                        <div class="timer-bar-container">
+                            <div id="timerBar" class="timer-bar"></div>
+                        </div>
+                    </div>
+
+                    <div id="playerAreas" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                        <!-- Player areas will be dynamically generated here -->
+                    </div>
+
+                    <div id="roundMessageBox" class="message-box text-center text-lg mt-6"></div>
+                </div>
+
+                <div id="quizResults" class="hidden text-center mt-8">
+                    <h3 class="text-4xl mb-4 text-green-700">Quiz Finished! 🎉</h3>
+                    <div id="finalScores" class="text-2xl font-bold mb-6"></div>
+                    <button id="restartQuizBtn" class="button-primary text-xl px-6 py-3">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 HUI KAR LOONG, SJKC KG BARU PAJAM. All rights reserved.</p>
+    </footer>
+
+    <!-- Tone.js for sound effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+    <script>
+        const allQuestions = [ // Renamed to allQuestions
+            { question: "How ______ money do you have?", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Money' is an uncountable noun, so we use 'much' or 'a lot of'. 'Much' is common in questions and 'no' sentences." },
+            { question: "There are ______ books on the shelf.", options: ["much", "some", "any"], answer: "some", explanation: "'Books' are countable nouns, and this is a 'yes' sentence. 'Some' is a good choice." },
+            { question: "I don't have ______ information about the event.", options: ["many", "any", "a lot of"], answer: "any", explanation: "'Information' is an uncountable noun, and this is a 'no' sentence. 'Any' is used in 'no' sentences." },
+            { question: "She bought ______ new clothes.", options: ["much", "a lot of", "any"], answer: "a lot of", explanation: "'Clothes' are countable. 'A lot of' works for both countable and uncountable nouns in 'yes' sentences." },
+            { question: "Do you have ______ brothers or sisters?", options: ["much", "some", "any"], answer: "any", explanation: "'Brothers' and 'sisters' are countable nouns, and this is a question. 'Any' is used in questions." },
+            { question: "We need ______ water for the plants.", options: ["many", "some", "much"], answer: "some", explanation: "'Water' is an uncountable noun, and this is a 'yes' sentence. 'Some' is appropriate." },
+            { question: "There isn't ______ milk in the fridge.", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Milk' is an uncountable noun, and this is a 'no' sentence. 'Much' is common in 'no' sentences." },
+            { question: "He has ______ interesting ideas.", options: ["much", "many", "a lot of"], answer: "many", explanation: "'Ideas' are countable nouns. 'Many' is a good choice for countable nouns in 'yes' sentences, though 'a lot of' is also correct here." },
+            { question: "Is there ______ sugar in your coffee?", options: ["many", "any", "some"], answer: "any", explanation: "'Sugar' is an uncountable noun, and this is a question. 'Any' is used in questions." },
+            { question: "They received ______ good news.", options: ["many", "some", "much"], answer: "some", explanation: "'News' is an uncountable noun, and this is a 'yes' sentence. 'Some' is appropriate." },
+            { question: "I saw ______ birds in the garden.", options: ["much", "some", "any"], answer: "some", explanation: "'Birds' are countable. 'Some' is used in affirmative sentences." },
+            { question: "There isn't ______ traffic today.", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Traffic' is uncountable. 'Much' is used in negative sentences." },
+            { question: "Do you have ______ time to help me?", options: ["many", "any", "a lot of"], answer: "any", explanation: "'Time' (in this context) is uncountable. 'Any' is used in questions." },
+            { question: "She has ______ patience with children.", options: ["many", "a lot of", "any"], answer: "a lot of", explanation: "'Patience' is uncountable. 'A lot of' works for both countable and uncountable nouns." },
+            { question: "We didn't get ______ sleep last night.", options: ["many", "any", "much"], answer: "much", explanation: "'Sleep' is uncountable. 'Much' is used in negative sentences." },
+            { question: "There are ______ beautiful flowers in the park.", options: ["much", "some", "any"], answer: "some", explanation: "'Flowers' are countable. 'Some' is used in affirmative sentences." },
+            { question: "How ______ people are coming to the party?", options: ["much", "many", "a lot of"], answer: "many", explanation: "'People' are countable. 'Many' is used in questions." },
+            { question: "I don't have ______ homework tonight.", options: ["many", "any", "much"], answer: "much", explanation: "'Homework' is uncountable. 'Much' is used in negative sentences." },
+            { question: "He needs ______ advice on his career.", options: ["many", "some", "any"], answer: "some", explanation: "'Advice' is uncountable. 'Some' is used in affirmative sentences." },
+            { question: "Are there ______ chairs available?", options: ["much", "any", "a lot of"], answer: "any", explanation: "'Chairs' are countable. 'Any' is used in questions." },
+            { question: "I have ______ friends in London.", options: ["much", "many", "a lot of"], answer: "many", explanation: "'Friends' are countable. 'Many' is appropriate for countable nouns." },
+            { question: "We don't have ______ bread left.", options: ["many", "any", "much"], answer: "much", explanation: "'Bread' is uncountable. 'Much' is used in negative sentences." },
+            { question: "Did you buy ______ fruit?", options: ["many", "any", "some"], answer: "any", explanation: "'Fruit' (as a general category) is often uncountable. 'Any' is used in questions." },
+            { question: "There was ______ laughter in the room.", options: ["many", "a lot of", "any"], answer: "a lot of", explanation: "'Laughter' is uncountable. 'A lot of' works for both." },
+            { question: "She has ______ experience in teaching.", options: ["many", "much", "a lot of"], answer: "a lot of", explanation: "'Experience' (as a general concept) is uncountable. 'A lot of' works for both." },
+            { question: "I need ______ new clothes for the trip.", options: ["much", "some", "any"], answer: "some", explanation: "'Clothes' are countable. 'Some' is used in affirmative sentences." },
+            { question: "How ______ information did you find?", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Information' is uncountable. 'Much' is used in questions." },
+            { question: "There weren't ______ cars on the road.", options: ["much", "many", "any"], answer: "many", explanation: "'Cars' are countable. 'Many' is used in negative sentences." },
+            { question: "Do you have ______ spare change?", options: ["much", "any", "some"], answer: "any", explanation: "'Change' (meaning small coins) is uncountable. 'Any' is used in questions." },
+            { question: "We have ______ work to do.", options: ["many", "a lot of", "any"], answer: "a lot of", explanation: "'Work' (as a general concept) is uncountable. 'A lot of' works for both." },
+            { question: "He ate ______ apples.", options: ["much", "some", "any"], answer: "some", explanation: "'Apples' are countable. 'Some' is used in affirmative sentences." },
+            { question: "There isn't ______ space in the car.", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Space' (meaning room) is uncountable. 'Much' is used in negative sentences." },
+            { question: "Did you receive ______ help?", options: ["many", "any", "some"], answer: "any", explanation: "'Help' is uncountable. 'Any' is used in questions." },
+            { question: "She bought ______ new furniture.", options: ["many", "a lot of", "any"], answer: "a lot of", explanation: "'Furniture' is uncountable. 'A lot of' works for both." },
+            { question: "I don't have ______ patience.", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Patience' is uncountable. 'Much' is used in negative sentences." },
+            { question: "There are ______ trees in the forest.", options: ["much", "some", "any"], answer: "some", explanation: "'Trees' are countable. 'Some' is used in affirmative sentences." },
+            { question: "How ______ sugar do you want?", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Sugar' is uncountable. 'Much' is used in questions." },
+            { question: "We didn't see ______ wildlife.", options: ["many", "any", "much"], answer: "much", explanation: "'Wildlife' is uncountable. 'Much' is used in negative sentences." },
+            { question: "He needs ______ new shoes.", options: ["much", "some", "any"], answer: "some", explanation: "'Shoes' are countable. 'Some' is used in affirmative sentences." },
+            { question: "Are there ______ good restaurants nearby?", options: ["much", "any", "a lot of"], answer: "any", explanation: "'Restaurants' are countable. 'Any' is used in questions." },
+            { question: "I have ______ hobbies.", options: ["much", "many", "a lot of"], answer: "many", explanation: "'Hobbies' are countable. 'Many' is appropriate for countable nouns." },
+            { question: "There isn't ______ rice left.", options: ["many", "any", "much"], answer: "much", explanation: "'Rice' is uncountable. 'Much' is used in negative sentences." },
+            { question: "Did you have ______ fun?", options: ["many", "any", "some"], answer: "any", explanation: "'Fun' is uncountable. 'Any' is used in questions." },
+            { question: "She has ______ courage.", options: ["many", "a lot of", "any"], answer: "a lot of", explanation: "'Courage' is uncountable. 'A lot of' works for both." },
+            { question: "We don't have ______ chairs.", options: ["many", "much", "a lot of"], answer: "many", explanation: "'Chairs' are countable. 'Many' is used in negative sentences." },
+            { question: "I need ______ paper for my drawing.", options: ["many", "some", "any"], answer: "some", explanation: "'Paper' (as a material) is uncountable. 'Some' is appropriate." },
+            { question: "How ______ time do you spend studying?", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Time' (duration) is uncountable. 'Much' is used in questions." },
+            { question: "There weren't ______ mistakes in his essay.", options: ["much", "many", "any"], answer: "many", explanation: "'Mistakes' are countable. 'Many' is used in negative sentences." },
+            { question: "Do you have ______ interesting stories?", options: ["much", "any", "some"], answer: "any", explanation: "'Stories' are countable. 'Any' is used in questions." },
+            { question: "He has ______ knowledge about history.", options: ["many", "a lot of", "any"], answer: "a lot of", explanation: "'Knowledge' is uncountable. 'A lot of' works for both." },
+            { question: "I saw ______ children playing.", options: ["much", "some", "any"], answer: "some", explanation: "'Children' are countable. 'Some' is used in affirmative sentences." },
+            { question: "There isn't ______ air in the balloon.", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Air' is uncountable. 'Much' is used in negative sentences." },
+            { question: "Did you bring ______ luggage?", options: ["many", "any", "some"], answer: "any", explanation: "'Luggage' is uncountable. 'Any' is used in questions." },
+            { question: "She has ______ beautiful dresses.", options: ["much", "many", "a lot of"], answer: "many", explanation: "'Dresses' are countable. 'Many' is appropriate for countable nouns." },
+            { question: "We don't have ______ patience for this.", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Patience' is uncountable. 'Much' is used in negative sentences." },
+            { question: "I need ______ new ideas.", options: ["much", "some", "any"], answer: "some", explanation: "'Ideas' are countable. 'Some' is used in affirmative sentences." },
+            { question: "How ______ water is in the glass?", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Water' is uncountable. 'Much' is used in questions." },
+            { question: "There weren't ______ people at the concert.", options: ["much", "many", "any"], answer: "many", explanation: "'People' are countable. 'Many' is used in negative sentences." },
+            { question: "Do you have ______ questions for me?", options: ["much", "any", "some"], answer: "any", explanation: "'Questions' are countable. 'Any' is used in questions." },
+            { question: "He has ______ energy.", options: ["many", "a lot of", "any"], answer: "a lot of", explanation: "'Energy' is uncountable. 'A lot of' works for both." },
+            { question: "I bought ______ new pencils.", options: ["much", "some", "any"], answer: "some", explanation: "'Pencils' are countable. 'Some' is used in affirmative sentences." },
+            { question: "There isn't ______ noise in the library.", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Noise' is uncountable. 'Much' is used in negative sentences." },
+            { question: "Did you read ______ interesting articles?", options: ["many", "any", "some"], answer: "any", explanation: "'Articles' are countable. 'Any' is used in questions." },
+            { question: "She received ______ compliments.", options: ["many", "a lot of", "any"], answer: "a lot of", explanation: "'Compliments' are countable. 'A lot of' works for both." },
+            { question: "We don't have ______ milk.", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Milk' is an uncountable noun. 'Much' is common in 'no' sentences." },
+            { question: "I need ______ help with my project.", options: ["many", "some", "any"], answer: "some", explanation: "'Help' is an uncountable noun. 'Some' is appropriate." },
+            { question: "How ______ time do we have left?", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Time' is an uncountable noun. 'Much' is common in questions." },
+            { question: "There are ______ apples in the basket.", options: ["much", "some", "any"], answer: "some", explanation: "'Apples' are countable nouns. 'Some' is a good choice." },
+            { question: "He doesn't have ______ friends.", options: ["many", "any", "much"], answer: "many", explanation: "'Friends' are countable nouns. 'Many' is used in 'no' sentences." },
+            { question: "Did you get ______ sleep?", options: ["many", "any", "much"], answer: "any", explanation: "'Sleep' is an uncountable noun. 'Any' is used in questions." },
+            { question: "She has ______ beautiful jewellery.", options: ["many", "a lot of", "any"], answer: "a lot of", explanation: "'Jewellery' is an uncountable noun. 'A lot of' works for both." },
+            { question: "We need ______ new furniture.", options: ["much", "some", "any"], answer: "some", explanation: "'Furniture' is an uncountable noun. 'Some' is appropriate." },
+            { question: "How ______ patience do you have?", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Patience' is an uncountable noun. 'Much' is common in questions." },
+            { question: "There isn't ______ space in the cupboard.", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Space' is an uncountable noun. 'Much' is common in 'no' sentences." },
+            { question: "Do you have ______ pets?", options: ["much", "any", "some"], answer: "any", explanation: "'Pets' are countable nouns. 'Any' is used in questions." },
+            { question: "I have ______ work to finish.", options: ["many", "a lot of", "any"], answer: "a lot of", explanation: "'Work' is an uncountable noun. 'A lot of' works for both." },
+            { question: "He needs ______ courage to do that.", options: ["many", "some", "much"], answer: "some", explanation: "'Courage' is an uncountable noun. 'Some' is appropriate." },
+            { question: "There are ______ cars in the car park.", options: ["much", "many", "a lot of"], answer: "many", explanation: "'Cars' are countable nouns. 'Many' is a good choice." },
+            { question: "I don't have ______ enthusiasm for this.", options: ["many", "any", "much"], answer: "much", explanation: "'Enthusiasm' is an uncountable noun. 'Much' is common in 'no' sentences." },
+            { question: "Did you find ______ information?", options: ["many", "any", "some"], answer: "any", explanation: "'Information' is an uncountable noun. 'Any' is used in questions." },
+            { question: "She has ______ interesting stories to tell.", options: ["much", "many", "a lot of"], answer: "many", explanation: "'Stories' are countable nouns. 'Many' is appropriate." },
+            { question: "We need ______ new equipment.", options: ["much", "some", "any"], answer: "some", explanation: "'Equipment' is an uncountable noun. 'Some' is appropriate." },
+            { question: "How ______ knowledge do you have?", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Knowledge' is an uncountable noun. 'Much' is common in questions." },
+            { question: "There isn't ______ water in the bottle.", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Water' is an uncountable noun. 'Much' is common in 'no' sentences." },
+            { question: "Do you have ______ pens?", options: ["much", "any", "some"], answer: "any", explanation: "'Pens' are countable nouns. 'Any' is used in questions." },
+            { question: "He has ______ experience.", options: ["many", "a lot of", "any"], answer: "a lot of", explanation: "'Experience' is an uncountable noun. 'A lot of' works for both." },
+            { question: "I saw ______ birds.", options: ["much", "some", "any"], answer: "some", explanation: "'Birds' are countable nouns. 'Some' is appropriate." },
+            { question: "There isn't ______ traffic.", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Traffic' is an uncountable noun. 'Much' is common in 'no' sentences." },
+            { question: "Did you buy ______ groceries?", options: ["many", "any", "some"], answer: "any", explanation: "'Groceries' are countable nouns. 'Any' is used in questions." },
+            { question: "She has ______ happiness.", options: ["many", "a lot of", "any"], answer: "a lot of", explanation: "'Happiness' is an uncountable noun. 'A lot of' works for both." },
+            { question: "We need ______ new books.", options: ["much", "some", "any"], answer: "some", explanation: "'Books' are countable nouns. 'Some' is appropriate." },
+            { question: "How ______ sugar?", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Sugar' is an uncountable noun. 'Much' is common in questions." },
+            { question: "There isn't ______ bread.", options: ["many", "much", "a lot of"], answer: "much", explanation: "'Bread' is an uncountable noun. 'Much' is common in 'no' sentences." },
+            { question: "Do you have ______ pets?", options: ["much", "any", "some"], answer: "any", explanation: "'Pets' are countable nouns. 'Any' is used in questions." },
+            { question: "He has ______ patience.", options: ["many", "a lot of", "any"], answer: "a lot of", explanation: "'Patience' is an uncountable noun. 'A lot of' works for both." },
+            { question: "I need ______ advice.", options: ["many", "some", "any"], answer: "some", explanation: "'Advice' is an uncountable noun. 'Some' is appropriate." },
+            { question: "There are ______ flowers.", options: ["much", "many", "a lot of"], answer: "many", explanation: "'Flowers' are countable nouns. 'Many' is appropriate." }
+        ];
+
+        let questions = []; // This will hold the shuffled questions for the current game
+        let currentQuestionIndex = 0;
+        let scores = [];
+        let numPlayers = 1;
+        let playerAnswers = []; // Stores { playerIndex, selectedOption, timestamp } for current round
+        let playersLockedIn = 0;
+        let questionTimer;
+        const QUESTION_TIME_LIMIT = 30; // seconds
+
+        // Tone.js Synths for sound effects
+        const correctSynth = new Tone.Synth({
+            oscillator: { type: "sine" },
+            envelope: { attack: 0.005, decay: 0.1, sustain: 0.05, release: 0.1 }
+        }).toDestination();
+        const incorrectSynth = new Tone.Synth({
+            oscillator: { type: "triangle" },
+            envelope: { attack: 0.005, decay: 0.1, sustain: 0.05, release: 0.1 }
+        }).toDestination();
+        const clickSynth = new Tone.Synth({
+            oscillator: { type: "square" },
+            envelope: { attack: 0.001, decay: 0.05, sustain: 0.01, release: 0.05 }
+        }).toDestination();
+
+
+        // DOM Elements
+        const tabButtonsContainer = document.getElementById('tabButtons');
+        const explanationTab = document.getElementById('explanationTab');
+        const quizTab = document.getElementById('quizTab');
+
+        const numPlayersSelect = document.getElementById('numPlayers');
+        const startGameBtn = document.getElementById('startGameBtn');
+        const quizContainer = document.getElementById('quizContainer');
+        const questionDisplay = document.getElementById('questionDisplay');
+        const playerAreasContainer = document.getElementById('playerAreas');
+        const roundMessageBox = document.getElementById('roundMessageBox');
+        const quizResults = document.getElementById('quizResults');
+        const finalScoresDisplay = document.getElementById('finalScores');
+        const restartQuizBtn = document.getElementById('restartQuizBtn');
+        const timerBar = document.getElementById('timerBar');
+
+        // Fisher-Yates (Knuth) Shuffle algorithm
+        function shuffleArray(array) {
+            let currentIndex = array.length, randomIndex;
+
+            // While there remain elements to shuffle.
+            while (currentIndex != 0) {
+                // Pick a remaining element.
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+
+                // And swap it with the current element.
+                [array[currentIndex], array[randomIndex]] = [
+                    array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+
+        // Event Listeners for Tabs
+        tabButtonsContainer.addEventListener('click', (event) => {
+            if (event.target.classList.contains('tab-button')) {
+                const tabId = event.target.dataset.tab;
+                switchTab(tabId);
+            }
+        });
+
+        // Event Listeners for Quiz
+        startGameBtn.addEventListener('click', startGame);
+        restartQuizBtn.addEventListener('click', restartGame);
+
+        function switchTab(tabId) {
+            // Deactivate all tab buttons and hide all tab content
+            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            // Activate the clicked tab button and show its content
+            document.querySelector(`.tab-button[data-tab="${tabId}"]`).classList.add('active');
+            document.getElementById(`${tabId}Tab`).classList.remove('hidden');
+        }
+
+        function initializeGame() {
+            numPlayers = parseInt(numPlayersSelect.value);
+            scores = Array(numPlayers).fill(0);
+            currentQuestionIndex = 0;
+            playerAnswers = [];
+            playersLockedIn = 0;
+            quizContainer.classList.remove('hidden');
+            quizResults.classList.add('hidden');
+            roundMessageBox.style.display = 'none';
+
+            // Shuffle questions at the start of each new game
+            questions = shuffleArray([...allQuestions]); // Create a shallow copy to shuffle
+
+            renderPlayerAreas();
+            displayQuestion();
+        }
+
+        function startGame() {
+            // Start the Tone.js audio context on user interaction
+            if (Tone.context.state !== 'running') {
+                Tone.start();
+            }
+            initializeGame();
+        }
+
+        function restartGame() {
+            quizResults.classList.add('hidden');
+            startGame(); // Re-initialize and start a new game
+        }
+
+        function renderPlayerAreas() {
+            playerAreasContainer.innerHTML = ''; // Clear previous player areas
+            playerAreasContainer.className = `grid grid-cols-1 md:grid-cols-2 ${numPlayers === 3 ? 'lg:grid-cols-3' : (numPlayers === 2 ? 'lg:grid-cols-2' : 'lg:grid-cols-1')} gap-6 mt-6`;
+
+            for (let i = 0; i < numPlayers; i++) {
+                const playerArea = document.createElement('div');
+                playerArea.id = `playerArea-${i}`;
+                playerArea.classList.add('player-area');
+                playerArea.innerHTML = `
+                    <h4 class="text-center">Player ${i + 1}</h4>
+                    <p class="text-center mb-3 player-score" id="playerScore-${i}">Score: 0</p>
+                    <div id="optionsContainer-${i}" class="options-container">
+                        <!-- Options will be loaded here -->
+                    </div>
+                    <button id="lockInBtn-${i}" class="button-primary w-full mt-4">Lock In Answer</button>
+                    <div id="playerMessageBox-${i}" class="message-box text-sm mt-3"></div>
+                `;
+                playerAreasContainer.appendChild(playerArea);
+            }
+            updateScoresDisplay();
+        }
+
+        function updateScoresDisplay() {
+            scores.forEach((score, index) => {
+                const scoreElement = document.getElementById(`playerScore-${index}`);
+                if (scoreElement) {
+                    scoreElement.textContent = `Score: ${score}`;
+                }
+            });
+        }
+
+        function displayQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const q = questions[currentQuestionIndex];
+                questionDisplay.textContent = q.question;
+
+                playerAnswers = []; // Reset answers for the new round
+                playersLockedIn = 0;
+                roundMessageBox.style.display = 'none'; // Hide round message
+
+                // Reset and populate options for each player
+                for (let i = 0; i < numPlayers; i++) {
+                    const optionsContainer = document.getElementById(`optionsContainer-${i}`);
+                    const lockInBtn = document.getElementById(`lockInBtn-${i}`);
+                    const playerMessageBox = document.getElementById(`playerMessageBox-${i}`);
+
+                    optionsContainer.innerHTML = '';
+                    playerMessageBox.style.display = 'none';
+                    lockInBtn.disabled = true;
+                    lockInBtn.textContent = 'Lock In Answer';
+                    lockInBtn.onclick = () => lockInAnswer(i); // Re-attach listener
+
+                    // Store selected option for each player in a temporary object
+                    playerAnswers[i] = { selectedOption: null, timestamp: null, hasAnswered: false, isCorrect: false };
+
+                    q.options.forEach(option => {
+                        const optionDiv = document.createElement('div');
+                        optionDiv.classList.add('quiz-option', 'rounded-lg', 'shadow-sm');
+                        optionDiv.textContent = option;
+                        optionDiv.addEventListener('click', () => selectOption(i, optionDiv, option));
+                        optionsContainer.appendChild(optionDiv);
+                    });
+                }
+                startQuestionTimer();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function selectOption(playerIndex, element, option) {
+            clickSynth.triggerAttackRelease("C5", "8n"); // Play click sound
+            // Remove 'selected' class from all options for this player
+            document.querySelectorAll(`#optionsContainer-${playerIndex} .quiz-option`).forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+            // Add 'selected' class to the clicked option
+            element.classList.add('selected');
+            playerAnswers[playerIndex].selectedOption = option;
+            document.getElementById(`lockInBtn-${playerIndex}`).disabled = false;
+        }
+
+        function lockInAnswer(playerIndex) {
+            if (playerAnswers[playerIndex].hasAnswered) return; // Prevent double lock-in
+
+            const lockInBtn = document.getElementById(`lockInBtn-${playerIndex}`);
+            const optionsContainer = document.getElementById(`optionsContainer-${playerIndex}`);
+            const playerMessageBox = document.getElementById(`playerMessageBox-${playerIndex}`);
+
+            if (playerAnswers[playerIndex].selectedOption === null) {
+                showMessage(playerMessageBox, "Please select an answer first.", "warning");
+                return;
+            }
+
+            playerAnswers[playerIndex].timestamp = Date.now();
+            playerAnswers[playerIndex].hasAnswered = true;
+            playersLockedIn++;
+
+            lockInBtn.disabled = true;
+            lockInBtn.textContent = 'Answer Locked!';
+
+            // Disable further clicks on options for this player
+            optionsContainer.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+
+            showMessage(playerMessageBox, "Answer locked in!", "success");
+
+            if (playersLockedIn === numPlayers) {
+                clearTimeout(questionTimer); // All players answered, stop timer
+                evaluateRound();
+            }
+        }
+
+        function startQuestionTimer() {
+            let timeLeft = QUESTION_TIME_LIMIT;
+            timerBar.style.width = '100%';
+            timerBar.style.transition = `width ${QUESTION_TIME_LIMIT}s linear`; // Smooth transition over time limit
+
+            // Force reflow to ensure transition starts from 100%
+            void timerBar.offsetWidth;
+            timerBar.style.width = '0%';
+
+            questionTimer = setTimeout(() => {
+                evaluateRound(); // Time's up!
+            }, QUESTION_TIME_LIMIT * 1000);
+        }
+
+        function evaluateRound() {
+            clearTimeout(questionTimer); // Stop timer if not already stopped
+            timerBar.style.transition = 'none'; // Stop animation
+            timerBar.style.width = '0%'; // Reset for next question
+
+            const q = questions[currentQuestionIndex];
+            let fastestCorrectPlayer = -1;
+            let fastestCorrectTime = Infinity;
+
+            // Determine correctness and identify fastest correct answer
+            playerAnswers.forEach((playerAns, index) => {
+                const playerOptions = document.querySelectorAll(`#optionsContainer-${index} .quiz-option`);
+                const playerMessageBox = document.getElementById(`playerMessageBox-${index}`);
+
+                // Highlight options for all players
+                playerOptions.forEach(opt => {
+                    opt.removeEventListener('click', () => {}); // Remove click listener
+                    opt.style.pointerEvents = 'none'; // Ensure options are disabled
+                    if (opt.textContent === q.answer) {
+                        opt.classList.add('correct'); // Mark correct answer
+                    }
+                    if (opt.textContent === playerAns.selectedOption && playerAns.selectedOption !== q.answer) {
+                        opt.classList.add('incorrect'); // Mark incorrect selected answer
+                    }
+                });
+
+                if (playerAns.selectedOption === q.answer) {
+                    playerAns.isCorrect = true;
+                    if (playerAns.timestamp < fastestCorrectTime) {
+                        fastestCorrectTime = playerAns.timestamp;
+                        fastestCorrectPlayer = index;
+                    }
+                }
+            });
+
+            // Award point to the fastest correct player
+            if (fastestCorrectPlayer !== -1) {
+                scores[fastestCorrectPlayer]++;
+                updateScoresDisplay();
+                correctSynth.triggerAttackRelease("G5", "8n"); // Play correct sound
+                showMessage(roundMessageBox, `Player ${fastestCorrectPlayer + 1} was fastest and correct! 🎉`, "success");
+            } else {
+                incorrectSynth.triggerAttackRelease("C3", "8n"); // Play incorrect sound
+                showMessage(roundMessageBox, "Oh dear! No one got it correct or time ran out! 😔", "error");
+            }
+
+            // Show individual feedback
+            playerAnswers.forEach((playerAns, index) => {
+                const playerMessageBox = document.getElementById(`playerMessageBox-${index}`);
+                if (playerAns.isCorrect && index === fastestCorrectPlayer) {
+                    showMessage(playerMessageBox, "You were correct and fastest! Well done! ⭐", "success");
+                } else if (playerAns.isCorrect) {
+                    showMessage(playerMessageBox, "Correct, but not the fastest this time. Keep trying! 👍", "warning");
+                } else {
+                    showMessage(playerMessageBox, `Oops! Incorrect. The correct answer was '${q.answer}'. Better luck next time! 🙁`, "error");
+                }
+            });
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                displayQuestion();
+            }, 4000); // Wait 4 seconds before moving to next question
+        }
+
+        function showMessage(element, msg, type) {
+            element.textContent = msg;
+            element.style.display = 'block';
+            element.className = 'message-box mt-4'; // Reset classes
+            if (type === "success") {
+                element.classList.add('bg-green-100', 'border-green-400', 'text-green-700');
+            } else if (type === "error") {
+                element.classList.add('bg-red-100', 'border-red-400', 'text-red-700');
+            } else if (type === "warning") {
+                element.classList.add('bg-yellow-100', 'border-yellow-400', 'text-yellow-700');
+            }
+        }
+
+        function endQuiz() {
+            quizContainer.classList.add('hidden');
+            quizResults.classList.remove('hidden');
+            let finalScoresText = '';
+            if (numPlayers === 1) {
+                finalScoresText = `You scored ${scores[0]} out of ${questions.length}! Amazing! 🏆`;
+            } else {
+                finalScoresText = 'Final Scores:<br>';
+                scores.forEach((score, index) => {
+                    finalScoresText += `Player ${index + 1}: ${score} points<br>`;
+                });
+                const maxScore = Math.max(...scores);
+                const winners = scores.map((score, index) => ({ score, index }))
+                                     .filter(player => player.score === maxScore);
+                if (winners.length === 1) {
+                    finalScoresText += `<br>Player ${winners[0].index + 1} wins! Congratulations! 👑`;
+                } else {
+                    finalScoresText += `<br>It's a tie! Well played everyone! 🤝`;
+                }
+            }
+            finalScoresDisplay.innerHTML = finalScoresText;
+        }
+
+        // Initial tab activation
+        switchTab('explanation');
+    </script>
+</body>
+</html>
